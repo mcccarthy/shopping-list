@@ -144,14 +144,20 @@ function removeItemFromStorage(item) {
 	localStorage.setItem('items', JSON.stringify(itemsFromStorage));
 }
 function clearItem() {
-	while (itemList.firstChild) {
-		itemList.removeChild(itemList.firstChild);
+	const confirmation = window.confirm(
+		'Are you sure you want to delete all items? This action cannot be undone.'
+	);
+
+	if (confirmation) {
+		while (itemList.firstChild) {
+			itemList.removeChild(itemList.firstChild);
+		}
+
+		// Clear from local storage
+		localStorage.removeItem('items');
+
+		checkUI();
 	}
-
-	// clear from local storage
-	localStorage.removeItem('items');
-
-	checkUI();
 }
 
 function filterItem(e) {
